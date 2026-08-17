@@ -1,6 +1,7 @@
 #Load Dataset
 import pandas as pd
 import numpy as np
+from pathlib import Path
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
@@ -20,8 +21,18 @@ from sklearn.metrics import (
     matthews_corrcoef
 )
 
+
+# 1. Get the absolute path of the directory where app.py is running
+# __file__ is a built-in variable that points to your app.py script location
+BASE_DIR = Path(__file__).resolve().parent
+
+# Join the base directory path with your dataset filename
+DATASET_PATH = BASE_DIR / "WA_Fn-UseC_-Telco-Customer-Churn.csv"
+
+#print(BASE_DIR)
+
 # 1. Load the dataset (Update path to your local downloaded file)
-df = pd.read_csv("C:\\Users\\arund\\OneDrive\\Desktop\\Mtech\\Assignments\\ML\\WA_Fn-UseC_-Telco-Customer-Churn.csv")
+df = pd.read_csv(DATASET_PATH)
 
 # Force Pandas to show all content
 pd.set_option('display.max_rows', None)
@@ -65,7 +76,8 @@ X = df_encoded.drop(columns=['Churn'])
 y = df_encoded['Churn']
 
 # 4. Split into Training and Testing sets (80/20 split)
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+#X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42)
 
 # 5. Feature Scaling (Highly recommended for stable Logistic Regression convergence)
 scaler = StandardScaler()
