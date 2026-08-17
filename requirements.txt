@@ -1,6 +1,7 @@
 # Data Manipulation & Math
 numpy==2.0.2
 pandas==2.3.3
+pathlib 
 
 # Machine Learning & Metrics
 scikit-learn
