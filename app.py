@@ -20,6 +20,15 @@ from sklearn.metrics import (
     f1_score, 
     matthews_corrcoef
 )
+import streamlit as st
+
+
+ModelName = st.selectbox(
+    "Model Selection",
+    ("Select a model","Logistic Regression","Decision Tree Classifier","K-Nearest Neighbor Classifier","Naive Bayes Classifi er - Gaussian or Multinomial","Random Forest")
+)
+
+#st.write("Model Selected:",ModelName)
 
 
 # 1. Get the absolute path of the directory where app.py is running
@@ -29,7 +38,7 @@ BASE_DIR = Path(__file__).resolve().parent
 # Join the base directory path with your dataset filename
 DATASET_PATH = BASE_DIR / "WA_Fn-UseC_-Telco-Customer-Churn.csv"
 
-#print(BASE_DIR)
+print(BASE_DIR)
 
 # 1. Load the dataset (Update path to your local downloaded file)
 df = pd.read_csv(DATASET_PATH)
@@ -39,7 +48,7 @@ pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
 
 #Take user entry
-ModelName = input("Enter Model Name: ")
+#ModelName = input("Enter Model Name: ")
 
 if ModelName == "Logistic Regression" :
    tag = 1
@@ -49,8 +58,10 @@ elif ModelName == "K-Nearest Neighbor Classifier" :
    tag = 3
 elif ModelName == "Naive Bayes Classifi er - Gaussian or Multinomial" :
    tag = 4
-else:
+elif ModelName == "Random Forest":
    tag = 5
+else:
+   tag = 6
 # Print 
 #print(df)
 
@@ -122,14 +133,16 @@ metrics = {
 
 # 9. Output Report
 if tag == 1:
-  print("=== Telco Churn Logistic Regression Metrics ===")
+  st.write("=== Telco Churn Logistic Regression Metrics ===")
 elif tag == 2:
-  print("=== Telco Churn Decision Tree Classifier ===")
+  st.write("=== Telco Churn Decision Tree Classifier ===")
 elif tag == 3:
-   print("=== Telco Churn K-Nearest Neighbor Classifier ===")
+   st.write("=== Telco Churn K-Nearest Neighbor Classifier ===")
 elif tag == 4:
-   print("=== Telco Churn Naive Bayes Classifi er - Gaussian or Multinomial ===")
-else:
-   print("=== Telco Churn Ensemble Model - Random Forest ===")
-for name, score in metrics.items():
-    print(f"{name}: {score:.4f}")
+   st.write("=== Telco Churn Naive Bayes Classifi er - Gaussian or Multinomial ===")
+elif tag == 5:
+   st.write("=== Telco Churn Ensemble Model - Random Forest ===")
+
+if tag != 6:
+   for name, score in metrics.items():
+      st.write(f"{name}: {score:.4f}")
